@@ -1,8 +1,10 @@
+import gtts
 from gtts import gTTS
 from playsound import playsound
 import tkinter as tk
 import os
 from pathlib import Path
+
 
 def main():
     def txt_to_speech():
@@ -18,7 +20,7 @@ def main():
                 playsound(path)
                 os.remove(path)
             except ValueError:
-                check.set("The characters could not be read!")
+                check.set("The langauge is not supported!")
                 lab.config(bg="red")
         except AssertionError:
             pass
@@ -37,8 +39,8 @@ def main():
     def bn():
         lang.set("bn")
 
-    def yue():
-        lang.set("yue")
+    def zh_CN():
+        lang.set("zh-CN")
 
     def cs():
         lang.set("cs")
@@ -85,11 +87,8 @@ def main():
     def ko():
         lang.set("ko")
 
-    def cmn():
-        lang.set("cmn")
-
-    def nb():
-        lang.set("nb")
+    def no():
+        lang.set("no")
 
     def pl():
         lang.set("pl")
@@ -120,6 +119,7 @@ def main():
 
     def vi():
         lang.set("vi")
+
     root = tk.Tk()
     root.title("Text To Speech")
     root.geometry("285x150")
@@ -132,7 +132,7 @@ def main():
     menu.add_cascade(label="Language", menu=langmenu)
     langmenu.add_command(label="Arabic", command=ar)
     langmenu.add_command(label="Bengali", command=bn)
-    langmenu.add_command(label="Chinese", command=yue)
+    langmenu.add_command(label="Chinese", command=zh_CN)
     langmenu.add_command(label="Czech", command=cs)
     langmenu.add_command(label="Danish", command=da)
     langmenu.add_command(label="Dutch", command=nl)
@@ -147,9 +147,8 @@ def main():
     langmenu.add_command(label="Indonesian", command=id)
     langmenu.add_command(label="Italian", command=it)
     langmenu.add_command(label="Japanese", command=ja)
-    langmenu.add_command(label="Koreanisch ", command=ko)
-    langmenu.add_command(label="Mandarin", command=cmn)
-    langmenu.add_command(label="Norwegisch ", command=nb)
+    langmenu.add_command(label="Korean", command=ko)
+    langmenu.add_command(label="Norwegian", command=no)
     langmenu.add_command(label="Polish", command=pl)
     langmenu.add_command(label="Portuguese", command=pt)
     langmenu.add_command(label="Russian", command=ru)
