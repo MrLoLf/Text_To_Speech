@@ -1,3 +1,6 @@
+# author: Fabian Roscher
+# date: 26.11.2020
+# description: Text to speech in GUI
 from gtts import gTTS
 from playsound import playsound
 import os
