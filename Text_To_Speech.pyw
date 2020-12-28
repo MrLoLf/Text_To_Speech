@@ -4,13 +4,15 @@
 from gtts import gTTS
 from playsound import playsound
 import os
-import winsound
+
 try:
     from pathlib import Path
     import tkinter as tk
+    import winsound
 except ImportError:
     from pathlib2 import Path
     import Tkinter as tk
+    import winsound
 
 
 def main():
@@ -202,8 +204,8 @@ def main():
     langmenu.add_command(label="Vietnamese ", command=vi)
 
     root.configure(bg="white")
-    tk.Label(root, text="Text To Speech", font="arial 15 bold").grid(row=0, column=1)
-    tk.Label(root, text="Enter your Text:", font="arial 12").grid(row=1, column=1)
+    tk.Label(root, text="Text To Speech", font="arial 15 bold", bg="white").grid(row=0, column=1)
+    tk.Label(root, text="Enter your Text:", font="arial 12", bg="white").grid(row=1, column=1)
     msg = tk.StringVar()
     ent = tk.Entry(root, textvariable=msg)
     ent.bind('<Return>', txt_to_speech)
@@ -213,10 +215,10 @@ def main():
     tk.Button(root, text="Reset", font="arial 13", bg="yellow", command=reset).grid(row=3, column=2)
     language = tk.StringVar()
     language.set("Language: English")
-    langlab = tk.Label(root, textvariable=language, font="arial 13")
+    langlab = tk.Label(root, textvariable=language, font="arial 13", bg="white")
     langlab.grid(row=4, column=1)
     check = tk.StringVar()
-    lab = tk.Label(root, textvariable=check)
+    lab = tk.Label(root, textvariable=check,bg="white")
     lab.grid(row=5, column=1)
     root.mainloop()
 
