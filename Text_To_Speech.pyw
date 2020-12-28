@@ -168,7 +168,7 @@ def main():
     root.geometry("300x160")
     lang = tk.StringVar()
     lang.set("en")
-
+    root.resizable(0, 0)
     menu = tk.Menu(root)
     root.config(menu=menu)
     langmenu = tk.Menu(menu, tearoff=0)
