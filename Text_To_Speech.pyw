@@ -1,8 +1,10 @@
 # author: Fabian Roscher
 # date: 26.11.2020
 # description: Text to speech in GUI
+
+
 from gtts import gTTS
-from playsound import playsound
+from pydub import AudioSegment
 import os
 
 try:
@@ -16,7 +18,7 @@ except ImportError:
 
 
 def main():
-    def txt_to_speech(event=None):
+    def txt_to_speech():
         try:
             try:
                 check.set("")
@@ -25,17 +27,33 @@ def main():
                 speech.save("Text.mp3")
                 __dirpath__ = Path(globals().get("__file__", "./_")).absolute().parent
                 path = str(__dirpath__) + "\\Text.mp3"
+                path2 = str(__dirpath__) + "\\test.wav"
+                print(path)
+
                 try:
-                    playsound(path)
+                    # files
+
+
+                    # files
+                    src = "Text.mp3"
+                    dst = "test.wav"
+
+                    # convert wav to mp3
+                    sound = AudioSegment.from_mp3(src)
+                    sound.export(dst, format="wav")
+                    winsound.PlaySound("test.wav", winsound.SND_ASYNC)
                 except Exception:
                     winsound.PlaySound("SystemExit", winsound.SND_ALIAS)
                     check.set("Wasn't able to load the characters!")
                     lab.config(bg="red")
-                os.remove(path)
+                root.after(10)
+                os.remove(str(path))
+
             except ValueError:
                 winsound.PlaySound("SystemExit", winsound.SND_ALIAS)
                 check.set("The langauge is not supported!")
                 lab.config(bg="red")
+
         except AssertionError:
             pass
 
@@ -172,53 +190,53 @@ def main():
     menu = tk.Menu(root)
     root.config(menu=menu)
     langmenu = tk.Menu(menu, tearoff=0)
-    menu.add_cascade(label="Language", menu=langmenu)
-    langmenu.add_command(label="Arabic", command=ar)
-    langmenu.add_command(label="Bengali", command=bn)
-    langmenu.add_command(label="Chinese", command=zh_cn)
-    langmenu.add_command(label="Czech", command=cs)
-    langmenu.add_command(label="Danish", command=da)
-    langmenu.add_command(label="Dutch", command=nl)
-    langmenu.add_command(label="English", command=en)
-    langmenu.add_command(label="Filipino", command=fil)
-    langmenu.add_command(label="Finnish", command=fi)
-    langmenu.add_command(label="French", command=fr)
-    langmenu.add_command(label="German", command=de)
-    langmenu.add_command(label="Greek", command=el)
-    langmenu.add_command(label="Hindi", command=hi)
-    langmenu.add_command(label="Hungarian", command=hu)
-    langmenu.add_command(label="Indonesian", command=ind)
-    langmenu.add_command(label="Italian", command=it)
-    langmenu.add_command(label="Japanese", command=ja)
-    langmenu.add_command(label="Korean", command=ko)
-    langmenu.add_command(label="Norwegian", command=no)
-    langmenu.add_command(label="Polish", command=pl)
-    langmenu.add_command(label="Portuguese", command=pt)
-    langmenu.add_command(label="Russian", command=ru)
-    langmenu.add_command(label="Slovak", command=sk)
-    langmenu.add_command(label="Spanish", command=es)
-    langmenu.add_command(label="Swedish", command=sv)
-    langmenu.add_command(label="Thai", command=th)
-    langmenu.add_command(label="Turkish", command=tr)
-    langmenu.add_command(label="Ukrainisch ", command=uk)
-    langmenu.add_command(label="Vietnamese ", command=vi)
+    menu.add_cascade(label="change language", menu=langmenu)
+    langmenu.add_radiobutton(label="Arabic", command=ar)
+    langmenu.add_radiobutton(label="Bengali", command=bn)
+    langmenu.add_radiobutton(label="Chinese", command=zh_cn)
+    langmenu.add_radiobutton(label="Czech", command=cs)
+    langmenu.add_radiobutton(label="Danish", command=da)
+    langmenu.add_radiobutton(label="Dutch", command=nl)
+    langmenu.add_radiobutton(label="English", command=en)
+    langmenu.add_radiobutton(label="Filipino", command=fil)
+    langmenu.add_radiobutton(label="Finnish", command=fi)
+    langmenu.add_radiobutton(label="French", command=fr)
+    langmenu.add_radiobutton(label="German", command=de)
+    langmenu.add_radiobutton(label="Greek", command=el)
+    langmenu.add_radiobutton(label="Hindi", command=hi)
+    langmenu.add_radiobutton(label="Hungarian", command=hu)
+    langmenu.add_radiobutton(label="Indonesian", command=ind)
+    langmenu.add_radiobutton(label="Italian", command=it)
+    langmenu.add_radiobutton(label="Japanese", command=ja)
+    langmenu.add_radiobutton(label="Korean", command=ko)
+    langmenu.add_radiobutton(label="Norwegian", command=no)
+    langmenu.add_radiobutton(label="Polish", command=pl)
+    langmenu.add_radiobutton(label="Portuguese", command=pt)
+    langmenu.add_radiobutton(label="Russian", command=ru)
+    langmenu.add_radiobutton(label="Slovak", command=sk)
+    langmenu.add_radiobutton(label="Spanish", command=es)
+    langmenu.add_radiobutton(label="Swedish", command=sv)
+    langmenu.add_radiobutton(label="Thai", command=th)
+    langmenu.add_radiobutton(label="Turkish", command=tr)
+    langmenu.add_radiobutton(label="Ukrainisch ", command=uk)
+    langmenu.add_radiobutton(label="Vietnamese ", command=vi)
 
     root.configure(bg="white")
     tk.Label(root, text="Text To Speech", font="arial 15 bold", bg="white").grid(row=0, column=1)
     tk.Label(root, text="Enter your Text:", font="arial 12", bg="white").grid(row=1, column=1)
     msg = tk.StringVar()
     ent = tk.Entry(root, textvariable=msg)
-    ent.bind('<Return>', txt_to_speech)
+    ent.bind('<Return>', lambda event: txt_to_speech())
     ent.grid(row=2, column=1)
     tk.Button(root, text="Play", font="arial 13", bg="lightgreen", command=txt_to_speech).grid(row=3, column=0)
-    tk.Button(root, text="Exit", font="arial 13", bg="red", command=kill).grid(row=3, column=1)
-    tk.Button(root, text="Reset", font="arial 13", bg="yellow", command=reset).grid(row=3, column=2)
+    tk.Button(root, text="Exit", font="arial 13", bg="red", command=kill).grid(row=3, column=2)
+    tk.Button(root, text="Reset", font="arial 13", bg="yellow", command=reset).grid(row=3, column=1)
     language = tk.StringVar()
     language.set("Language: English")
     langlab = tk.Label(root, textvariable=language, font="arial 13", bg="white")
     langlab.grid(row=4, column=1)
     check = tk.StringVar()
-    lab = tk.Label(root, textvariable=check,bg="white")
+    lab = tk.Label(root, textvariable=check, bg="white")
     lab.grid(row=5, column=1)
     root.mainloop()
 
